@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../util/dataUtils.dart';
 import '../widgets/index_list_cell.dart';
 import '../widgets/indexListHeader.dart';
+import '../constants/constants.dart';
+
 class IndexPage extends StatefulWidget {
   final Widget child;
 
@@ -19,10 +21,19 @@ class _IndexPageState extends State<IndexPage> {
     }
     return  IndexListCell(cellInfo: _listData[index-1]);
   }
+  final pageIndexArray = Constants.RANK_BEFORE;
+  Map<String, dynamic> _params = {"src": 'web', "category": "all", "limit": 20};
+  int _pageIndex = 0;
   getList(bool isLoadMore) {
-    DataUtils.getIndexListData().then((resultList) {
-      setState(() {
-        _listData = resultList;
+    if(!isLoadMore){
+      // reload的时候重置page
+      _pageIndex = 0;
+    }
+    _params['before'] = pageIndexArray[_pageIndex];
+
+    DataUtils.getIndexListData(_params).then((result) {
+     setState(() {
+        _listData = result;
       });
     });
   }
