@@ -5,6 +5,9 @@ import './pins_page.dart';
 import './book_page.dart';
 import './respos_page.dart';
 import './activity_page.dart';
+import '../routers/routes.dart';
+import '../routers/application.dart';
+import 'package:fluro/fluro.dart';
 
 class MyApp extends StatefulWidget {
   final Widget child;
@@ -15,10 +18,16 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
+  _MyAppState() {
+    final router = new Router();
+    Routes.configureRoutes(router);
+    Application.router = router;
+  }
   final TextStyle tabTextStyleNormal =
         TextStyle(color: const Color(0xffdddddd));
   final TextStyle tabTextStyleSelected =
         TextStyle(color: const Color(0xff4d91fd));
+  
   // 底部bar
   final List<Tab> _bottomTabs = <Tab>[
     Tab(
