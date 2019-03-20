@@ -37,6 +37,17 @@ class _IndexPageState extends State<IndexPage> {
       });
     });
   }
+
+  // 下拉刷新
+  Future<void> _onRefresh() async{//The RefreshIndicator onRefresh callback must return a Future.
+    _listData.clear();
+    setState(() {
+      _listData = _listData;
+      //注意这里需要重置一切请求条件
+    });
+    getList(false);
+    return null;
+  }
   @override
   void initState() {
     super.initState();
@@ -49,9 +60,12 @@ class _IndexPageState extends State<IndexPage> {
         child: CircularProgressIndicator(),
       );
     }
-    return ListView.builder(
-      itemCount: _listData.length+1,//添加一个header
-      itemBuilder: (context,index)=> _renderList(context,index),
+    return RefreshIndicator(
+      onRefresh: _onRefresh,
+      child: ListView.builder(
+        itemCount: _listData.length + 2, //添加一个header 和 loadMore
+        itemBuilder: (context, index) => _renderList(context, index),
+      ),
     );
   }
 }
