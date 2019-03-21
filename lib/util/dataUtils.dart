@@ -6,8 +6,9 @@ class DataUtils {
   
   // 首页列表数据
   static Future<List<IndexCell>> getIndexListData(Map<String, dynamic> params) async {
+    print('$params============================================>');
     var response = await NetUtils.get(Api.RANK_LIST, params: params);
-
+    print('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<============================================>$response');
     var responseList = response['d']['entrylist'];
 
     List<IndexCell> resultList = new List();
